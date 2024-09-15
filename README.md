@@ -11,7 +11,8 @@ Features
 Partitioning Process
   Step 1: Create a Partitioned Table
   In this example, the users table is partitioned by the extract_month field, which indicates the month a record belongs to. This table serves as the parent table for the partitions
-
+  
+  **************************************************************************
   CREATE TABLE public.users (
     age smallint NOT NULL,
     creation_date date,
@@ -23,8 +24,11 @@ Partitioning Process
     CONSTRAINT users_pkey PRIMARY KEY (extract_month, id)
 ) PARTITION BY RANGE (extract_month);
 
+***************************************************************************
 Step 2: Create Partitions
   Each partition corresponds to a month, with values ranging from 1 to 12 for each month of the year. The partitions are created using the FOR VALUES clause to specify the range for each partition.
+  
+***************************************************************************
 
 CREATE TABLE users_01 PARTITION OF users FOR VALUES FROM (1) TO (2);
 CREATE TABLE users_02 PARTITION OF users FOR VALUES FROM (2) TO (3);
@@ -38,6 +42,8 @@ CREATE TABLE users_09 PARTITION OF users FOR VALUES FROM (9) TO (10);
 CREATE TABLE users_10 PARTITION OF users FOR VALUES FROM (10) TO (11);
 CREATE TABLE users_11 PARTITION OF users FOR VALUES FROM (11) TO (12);
 CREATE TABLE users_12 PARTITION OF users FOR VALUES FROM (12) TO (13);
+
+*******************************************************************************
 
 In this example, each partition stores data for a specific month based on the extract_month column, improving query efficiency by narrowing down searches to specific partitions.
 
